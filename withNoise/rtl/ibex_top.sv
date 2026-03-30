@@ -225,16 +225,14 @@ module ibex_top import ibex_pkg::*; #(
   //random clk
 
     logic clk_i;
-(* DONT_TOUCH = "true" *)
-  clkgen u_clkgen (
+  clkgen u_clkgen (// cadence syn_keep=1
     .i_clk(i_clk),
     .rst_n(rst_ni),
     .o_clk(clk_i)
   );
 
   //noise gen
-  (* DONT_TOUCH = "true" *)
-ring_oscillator u0_ro(
+ring_oscillator u0_ro( // cadence syn_keep=1
     .clk(i_clk),
     .enable(1'b1),
     .rst_n(rst_ni)

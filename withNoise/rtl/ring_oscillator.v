@@ -7,10 +7,9 @@ module ring_oscillator #(
 );
 
     // Internal stages of the ring
-    reg [N-1:0] stages;
+    reg [N-1:0] stages; // cadence syn_keep=1
 
     integer i;
-
     always @(negedge rst_n or posedge clk) begin
         if (!rst_n) begin
             stages <= 0;

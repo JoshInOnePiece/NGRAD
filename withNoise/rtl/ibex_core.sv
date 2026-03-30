@@ -166,7 +166,7 @@ module ibex_core import ibex_pkg::*; #(
   output logic                         alert_minor_o,
   output logic                         alert_major_internal_o,
   output logic                         alert_major_bus_o,
-  output ibex_mubi_t                   core_busy_o
+  output ibex_mubi_t                   core_busy_o  
 );
 
   localparam int unsigned PMPNumChan      = 3;
@@ -176,8 +176,7 @@ module ibex_core import ibex_pkg::*; #(
   localparam bit          ShadowCSR         = 1'b0;
 
 
-  (* DONT_TOUCH = "true" *)
-ring_oscillator u0_ro(
+ring_oscillator u0_ro( // cadence syn_keep=1
     .clk(clk_i),
     .enable(1'b1),
     .rst_n(rst_ni)

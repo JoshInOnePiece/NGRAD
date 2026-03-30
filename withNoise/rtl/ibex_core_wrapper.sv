@@ -73,8 +73,7 @@ module ibex_core_wrapper import ibex_pkg::*; (
 );
 
   //noise gen
-  (* DONT_TOUCH = "true" *)
-ring_oscillator u0_ro(
+ring_oscillator u0_ro( // cadence syn_keep=1
     .clk(clk_i),
     .enable(1'b1),
     .rst_n(rst_ni)

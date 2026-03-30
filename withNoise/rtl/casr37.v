@@ -5,7 +5,7 @@ module casr37(input  wire        clk,
               input  wire        i_ptb_valid,
               output reg  [36:0] o_state);
 
-  wire [36:0] nxt_state;
+  wire [36:0] nxt_state; // cadence syn_keep=1
 
   integer idx;
 

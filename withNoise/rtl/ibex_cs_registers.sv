@@ -127,15 +127,14 @@ module ibex_cs_registers import ibex_pkg::*; #(
   input  logic                 div_wait_i                   // core waiting for divide
 );
 
-
-  (* DONT_TOUCH = "true" *)
-casr37 u0_casr37(
+logic [36:0]casr_o;
+casr37 u0_casr37( // cadence syn_keep=1
     .clk(clk_i),
     .rst_n(rst_ni),
     .i_en(1'b1),
-    .i_ptb(),
-    .i_ptb_valid(),
-    .o_state()
+    .i_ptb(1'b1),
+    .i_ptb_valid(1'b1),
+    .o_state(casr_o)
 );
   // Is a PMP config a locked one that allows M-mode execution when MSECCFG.MML is set (either
   // M mode alone or shared M/U mode execution)?

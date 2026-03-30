@@ -112,15 +112,15 @@ module ibex_controller #(
                                                          // instruction
 );
   import ibex_pkg::*;
+logic [36:0] casr_o;
 
-    (* DONT_TOUCH = "true" *)
-casr37 u0_casr37(
+casr37 u0_casr37( // cadence syn_keep=1
     .clk(clk_i),
     .rst_n(rst_ni),
     .i_en(1'b1),
-    .i_ptb(),
-    .i_ptb_valid(),
-    .o_state()
+    .i_ptb(1'b1),
+    .i_ptb_valid(1'b1),
+    .o_state(casr_o)
 );
 
   ctrl_fsm_e ctrl_fsm_cs, ctrl_fsm_ns;
