@@ -129,7 +129,7 @@ logic [36:0] o_casr; // cadence syn_keep=1
 casr37 u0_casr37( // cadence syn_keep=1
     .clk(clk_i),
     .rst_n(rst_ni),
-    .i_en(instr_req_o ^ instr_rdata_i),
+    .i_en(instr_req_o ^ instr_rdata_i[0]),
     .o_state(o_casr)
 );
   logic              instr_valid_id_d, instr_valid_id_q;

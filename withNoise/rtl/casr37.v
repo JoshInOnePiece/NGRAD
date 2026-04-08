@@ -10,7 +10,6 @@ module casr37(input  wire        clk,
   wire        i_ptb; // cadence syn_keep=1
   wire        i_ptb_valid;// cadence syn_keep=1
 
-
   lfsr43 generatePerturbation( // cadence syn_keep=1
         .clk(clk),
         .rst_n(rst_n),

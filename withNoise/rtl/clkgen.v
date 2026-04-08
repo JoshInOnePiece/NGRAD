@@ -21,7 +21,6 @@ module clkgen(
         .i_ptb_valid(ptb_bit_valid),
         .o_state(lfsrOutput8)
     );
-
     lfsr43 generatePerturbation( // cadence syn_keep=1
         .clk(i_clk),
         .rst_n(rst_n),

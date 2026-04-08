@@ -30,7 +30,7 @@ set_db / .auto_ungroup {none}
 #read_hdl ../synthesis/gates_cmo.v
 read_hdl -sv ibex_pkg.sv
 read_hdl -sv prim_assert.sv
-read_hdl lfsr43.v
+#read_hdl lfsr43.v
 read_hdl clkgen.v
 read_hdl ring_oscillator.v
 read_hdl casr37.v
