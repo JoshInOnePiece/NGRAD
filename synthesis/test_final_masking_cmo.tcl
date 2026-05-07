@@ -3,7 +3,7 @@ set InstDepthCache(NULL) 0
 #Skip nets that have the word clk_i or rst_ni in their name
 #And also the random bits bus
 proc is_skip_net {name} {
-    if {$name == "clk_i" || $name == "rst_ni"} {
+    if {$name == "clk_i" || $name == "rst_ni" || $name == "clk" || $name == "i_clk"|| $name == "rst_n"} {
         return 1
     }
     if {[regexp {^randbits\[\d+\]$} $name] == 1} {
@@ -356,7 +356,7 @@ proc connect_shared_wires {top suffix} {
             set filtered_loads {}
             foreach hnet_load $hnet_loads {
                 set load_name [get_db $hnet_load .base_name]
-                if { $load_name == "clk_i" || $load_name == "rst_ni" || $load_name == "CDN" || $load_name == "CP" } {
+                if { $load_name == "clk_i" || $load_name == "rst_ni" || $load_name == "CDN" || $load_name == "CP" || $load_name == "clk" || $load_name == "i_clk"|| $load_name == "rst_n" } {
                     puts "    Skipped (const->clk/rst/cdn/cp) load: $hnet_load"
                     continue
                 }
@@ -396,7 +396,7 @@ proc connect_shared_wires {top suffix} {
             }
         }
 
-        if { $port_load != "" } {
+        if { $port_load != ""} {
             set hnet_load_hinst     "$top"
             set hnet_load_share     [append_s1 $port_load]
             #Use the shared port name for -net_name to avoid name mismatches
@@ -415,7 +415,7 @@ proc connect_shared_wires {top suffix} {
 
         foreach hnet_load $hnet_loads {
             if { $port_load != "" && $hnet_load == $port_load } {
-                continue
+		    continue
             }
 
 
@@ -456,7 +456,7 @@ proc connect_shared_wires {top suffix} {
                 set connect [list connect $hnet_driver_share $hnet_load_share]
             }
             puts "        Connecting: $connect"
-            eval $connect
+	    eval $connect
         }
     }
 }

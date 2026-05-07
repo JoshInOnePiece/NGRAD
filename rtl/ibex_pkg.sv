@@ -52,6 +52,13 @@ package ibex_pkg;
     RV32BFull       = 3
   } rv32b_e;
 
+  typedef enum integer {
+    RV32Zca        = 0,
+    RV32ZcaZcb     = 1,
+    RV32ZcaZcmp    = 2,
+    RV32ZcaZcbZcmp = 3
+  } rv32zc_e;
+
   /////////////
   // Opcodes //
   /////////////
@@ -300,6 +307,13 @@ package ibex_pkg;
     PC_BP
   } pc_sel_e;
 
+  // Compressed instruction expansion
+  typedef enum logic [1:0] {
+    INSTR_NOT_EXPANDED,
+    INSTR_EXPANDED,
+    INSTR_EXPANDED_LAST
+  } instr_exp_e;
+
   // Exception PC mux selection
   typedef enum logic [1:0] {
     EXC_PC_EXC,
@@ -387,6 +401,12 @@ package ibex_pkg;
   // PMP constants
   parameter int unsigned PMP_MAX_REGIONS      = 16;
   parameter int unsigned PMP_CFG_W            = 8;
+  // For RV32 the most significant bit of PMP address refers to the physical
+  // address bit index 33.
+  parameter int unsigned PMP_ADDR_MSB         = 33;
+  // For RV32 the least significant bit of the PMP CSRs refers to the physical
+  // address bit index 2.
+  parameter int unsigned PMP_ADDR_LSB         = 2;
 
   // PMP access type
   parameter int unsigned PMP_I  = 0;
@@ -661,7 +681,7 @@ package ibex_pkg;
   // See the Ibex Reference Guide (Custom Reset Values under Physical Memory
   // Protection) for more information.
 
-  parameter pmp_cfg_t PmpCfgRst[16] = '{
+  parameter pmp_cfg_t PmpCfgRst[PMP_MAX_REGIONS] = '{
     '{lock: 1'b0, mode: PMP_MODE_OFF, exec: 1'b0, write: 1'b0, read: 1'b0}, // region 0
     '{lock: 1'b0, mode: PMP_MODE_OFF, exec: 1'b0, write: 1'b0, read: 1'b0}, // region 1
     '{lock: 1'b0, mode: PMP_MODE_OFF, exec: 1'b0, write: 1'b0, read: 1'b0}, // region 2
@@ -683,7 +703,7 @@ package ibex_pkg;
   // Addresses are given in byte granularity for readability. A minimum of two
   // bits will be stripped off the bottom (PMPGranularity == 0) with more stripped
   // off at coarser granularities.
-  parameter logic [33:0] PmpAddrRst[16] = '{
+  parameter logic [PMP_ADDR_MSB:0] PmpAddrRst[PMP_MAX_REGIONS] = '{
     34'h0, // region 0
     34'h0, // region 1
     34'h0, // region 2

